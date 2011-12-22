@@ -482,13 +482,13 @@ struct dvb_usb_rc_key mtvhd_rc_keys[] = {
 
 /*
  * FORMAT:
- * 
+ *
  * data[32]:            count (MAX: 8)
  * data[0] - data[3]:   first event
  * data[4] - data[7]:   second event (if available)
  * ...
  * data[28] - data[31]: eighth event (if available)
- * 
+ *
  * data[n]:   checksum for data[n+1]
  * data[n+1]: actual key part
  * data[n+2]: checksum for data[n+3]
@@ -630,7 +630,10 @@ static int mtvhd_probe(struct usb_interface *intf,
 			  default:
 				;	/* Nothing to do */
 			}
+
+#ifdef CONFIG_DVB_USB_MTVHD_REMOTE_CONTROL
 			mtvhd_rc_init(d);
+#endif
 		}
 		return ret;
 	}

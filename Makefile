@@ -8,8 +8,14 @@ obj-m += \
     dvb-usb-asv5211.o
 
 dvb-usb-mtvhd-objs := \
-    mtvhd.o mtvhd-des-kernel.o mtvhd-v1.o mtvhd-xor.o \
-    des.o mtvhd-des-gnulib.o mtvhd-stream.o mtvhd-v2.o
+    mtvhd.o mtvhd-v1.o mtvhd-xor.o \
+    mtvhd-stream.o mtvhd-v2.o \
+    des.o mtvhd-des-gnulib.o
+
+dvb-usb-asv5211-objs := \
+    asv5211.o
+
+# mtvhd-des-kernel.o
 
 EXTRA_CFLAGS += \
     -include $(obj)/mtvhd-compat.h \

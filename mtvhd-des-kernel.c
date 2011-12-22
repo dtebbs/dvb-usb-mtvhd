@@ -77,7 +77,7 @@ int mtvhd_des_init(struct mtvhd_adapter_state *st)
 	for (i = 0; i < 2; i++) {
 		ctx->tfm[i] = crypto_alloc_cipher("des", 0, 0);
 		if (IS_ERR(ctx->tfm[i])) {
-			ret = (int)ctx->tfm[i];
+			ret = (int)(size_t )(ctx->tfm[i]);
 			err("failed to load transform for DES(%d): %d", i, ret);
 			goto err;
 		}

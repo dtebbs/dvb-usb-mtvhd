@@ -99,7 +99,7 @@ int mtvhd_i2c_write_byte(struct dvb_usb_device *d,
 
 /* I2C block write */
 int mtvhd_i2c_write_block(struct dvb_usb_device *d,
-				u8 i2c_addr, u8 *data, int len)
+                          u8 i2c_addr, const u8 *data, int len)
 {
 	int ret, n, count;
 	u8 buff[33];
@@ -374,7 +374,7 @@ static int mtvhd_rc_init(struct dvb_usb_device *d)
 }
 
 /* Remote Controller key mapping */
-struct dvb_usb_rc_key mtvhd_rc_keys[] = {
+struct rc_map_table mtvhd_rc_keys[] = {
 	{ 0x0a80, KEY_SCREEN },			/* Gamen hyoji */
 	{ 0x0a81, KEY_POWER },			/* POWER */
 	{ 0x0a82, KEY_MUTE },			/* MUTE */
@@ -724,10 +724,12 @@ static struct dvb_usb_device_properties hdu2_properties = {
 	.power_ctrl = mtvhd_v2_power_ctrl,
 
 #ifdef CONFIG_DVB_USB_MTVHD_REMOTE_CONTROL
-	.rc_interval      = 200,
-	.rc_key_map       = mtvhd_rc_keys,
-	.rc_key_map_size  = ARRAY_SIZE(mtvhd_rc_keys),
-	.rc_query         = mtvhd_rc_query,
+    .rc.legacy = {
+        .rc_interval      = 200,
+        .rc_map_table     = mtvhd_rc_keys,
+        .rc_map_size      = ARRAY_SIZE(mtvhd_rc_keys),
+        .rc_query         = mtvhd_rc_query,
+    },
 #endif
 
 	.num_device_descs = 4,
@@ -862,10 +864,12 @@ static struct dvb_usb_device_properties hduc_properties = {
 	.power_ctrl = mtvhd_v2_power_ctrl,
 
 #ifdef CONFIG_DVB_USB_MTVHD_REMOTE_CONTROL
-	.rc_interval      = 200,
-	.rc_key_map       = mtvhd_rc_keys,
-	.rc_key_map_size  = ARRAY_SIZE(mtvhd_rc_keys),
-	.rc_query         = mtvhd_rc_query,
+    .rc.legacy = {
+        .rc_interval      = 200,
+        .rc_map_table     = mtvhd_rc_keys,
+        .rc_map_size      = ARRAY_SIZE(mtvhd_rc_keys),
+        .rc_query         = mtvhd_rc_query,
+    },
 #endif
 
 	.num_device_descs = 5,
@@ -975,10 +979,12 @@ static struct dvb_usb_device_properties hdus_properties = {
 	.power_ctrl = mtvhd_v1_power_ctrl,
 
 #ifdef CONFIG_DVB_USB_MTVHD_REMOTE_CONTROL
-	.rc_interval      = 200,
-	.rc_key_map       = mtvhd_rc_keys,
-	.rc_key_map_size  = ARRAY_SIZE(mtvhd_rc_keys),
-	.rc_query         = mtvhd_rc_query,
+    .rc.legacy = {
+        .rc_interval      = 200,
+        .rc_map_table     = mtvhd_rc_keys,
+        .rc_map_size      = ARRAY_SIZE(mtvhd_rc_keys),
+        .rc_query         = mtvhd_rc_query,
+    },
 #endif
 
 	.num_device_descs = 3,

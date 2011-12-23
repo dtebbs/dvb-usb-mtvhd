@@ -565,10 +565,9 @@ static int mtvhd_asie560x_init(struct dvb_usb_adapter *adap)
 static int mtvhd_fe_read_status(struct dvb_frontend *fe,
 					fe_status_t *status)
 {
-	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int ret;
 
-	deb_info("FE[%d] read status: ", st->adap->id);
+	deb_info("FE[%d] read status: ", fe->demodulator_priv->adap->id);
 
 	*status = 0;
 	ret = mtvhd_demod_reg_read(fe, 0x80);
@@ -622,11 +621,10 @@ static int mtvhd_fe_read_unc_blocks(struct dvb_frontend *fe, u32 *unc)
 static int mtvhd_fe_read_signal_strength(struct dvb_frontend *fe,
 						u16 *strength)
 {
-	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int ret;
 	u8 x;
 
-	deb_info("FE[%d] read signal strength: ", st->adap->id);
+	deb_info("FE[%d] read signal strength: ", fe->demodulator_priv->adap->id);
 
 	*strength = 0;
 #if 0
@@ -655,17 +653,16 @@ static int mtvhd_fe_read_signal_strength(struct dvb_frontend *fe,
 
 done:
 	deb_info("%04x\n", *strength);
-	
+
 	return ret;
 }
 
 static int mtvhd_fe_read_snr(struct dvb_frontend *fe, u16 *snr)
 {
-	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int ret;
 	u32 val, x;
 
-	deb_info("FE[%d] read snr: ", st->adap->id);
+	deb_info("FE[%d] read snr: ", fe->demodulator_priv->adap->id);
 
 	*snr = 0;
 	ret = mtvhd_demod_reg_read(fe, 0x8B);
@@ -703,6 +700,7 @@ static int mtvhd_fe_get_tune_settings(struct dvb_frontend *fe,
 				struct dvb_frontend_tune_settings *tune)
 {
 	struct mtvhd_fe_state *st = fe->demodulator_priv;
+    (void )st;
 
 	deb_info("FE[%d] get tune settings\n", st->adap->id);
 
@@ -745,9 +743,7 @@ static int mtvhd_fe_set_frontend(struct dvb_frontend* fe,
 static int mtvhd_fe_get_frontend(struct dvb_frontend* fe,
 				struct dvb_frontend_parameters *fep)
 {
-	struct mtvhd_fe_state *st = fe->demodulator_priv;
-
-	deb_info("FE[%d] get frontend\n", st->adap->id);
+	deb_info("FE[%d] get frontend\n", fe->demodulator_priv->adap->id);
 
 	fep->u.ofdm.bandwidth = BANDWIDTH_6_MHZ;
 	return 0;
@@ -756,10 +752,9 @@ static int mtvhd_fe_get_frontend(struct dvb_frontend* fe,
 static int mtvhd_fe_set_property(struct dvb_frontend* fe,
 				struct dtv_property *tvp)
 {
-	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int ret = 0;
 
-	deb_info("FE[%d] set property (cmd = %x)\n", st->adap->id, tvp->cmd);
+	deb_info("FE[%d] set property (cmd = %x)\n", fe->demodulator_priv->adap->id, tvp->cmd);
 
 	switch (tvp->cmd) {
 	  case DTV_DELIVERY_SYSTEM:
@@ -783,9 +778,7 @@ static int mtvhd_fe_set_property(struct dvb_frontend* fe,
 static int mtvhd_fe_get_property(struct dvb_frontend* fe,
 				struct dtv_property *tvp)
 {
-	struct mtvhd_fe_state *st = fe->demodulator_priv;
-
-	deb_info("FE[%d] get property\n", st->adap->id);
+	deb_info("FE[%d] get property\n", fe->demodulator_priv->adap->id);
 
 	/* for recovery from DTV_CLEAR */
 	fe->dtv_property_cache.delivery_system = SYS_ISDBT;
@@ -794,7 +787,7 @@ static int mtvhd_fe_get_property(struct dvb_frontend* fe,
 }
 
 /* for debug ? */
-static int mtvhd_fe_write(struct dvb_frontend *fe, u8 *data, int len)
+static int mtvhd_fe_write(struct dvb_frontend *fe, const u8 data[], int len)
 {
 	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int i, ret;

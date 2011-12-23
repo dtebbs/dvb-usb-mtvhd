@@ -113,7 +113,7 @@ extern int mtvhd_i2c_read_byte(struct dvb_usb_device *d,
 extern int mtvhd_i2c_write_byte(struct dvb_usb_device *d,
 				u8 i2c_addr, u8 cmd, u8 val);
 extern int mtvhd_i2c_write_block(struct dvb_usb_device *d,
-				u8 i2c_addr, u8 *data, int len);
+                                 u8 i2c_addr, const u8 data[], int len);
 
 /* Common ASV5211 control */
 extern int mtvhd_asv5211_gpio(struct dvb_usb_device *d, u8 mask, u8 val);

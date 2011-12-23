@@ -295,12 +295,11 @@ static int mtvhd_tuner_init(struct dvb_frontend *fe)
 
 static int mtvhd_freq_set(struct dvb_frontend *fe, u32 freq)
 {
-	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int ret;
 	u16 div;
 	u8 band;
 
-	deb_info("Frequency set %d -> %d\n", st->frequency, freq);
+	deb_info("Frequency set %d -> %d\n", fe->demodulator_priv->frequency, freq);
 
 	/* PLL clock: 142.857kHz ? */
 	div = 399 + (freq / 142857);	/* ((freq / 1000000) + 57) * 7 */
@@ -547,7 +546,7 @@ static int mtvhd_fe_get_property(struct dvb_frontend* fe,
 }
 
 /* for debug ? */
-static int mtvhd_fe_write(struct dvb_frontend *fe, u8 *data, int len)
+static int mtvhd_fe_write(struct dvb_frontend *fe, const u8 data[], int len)
 {
 	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int i, ret;

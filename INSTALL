@@ -1,0 +1,14 @@
+- Build module:
+
+  make
+
+- Install firmware.  Find the 080701 version of HDUS drivers
+  (MTVHDU_080701_Drv.zip) and copy SKNET_AS11Loader.sys to:
+
+  /lib/firmware/AS11Loader.sys
+
+- Load modules:
+
+  sudo insmod dvb-usb-asv5211.ko
+
+

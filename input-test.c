@@ -4,6 +4,7 @@
 static struct rc_dev *myrc = 0;
 static struct delayed_work myrc_delayed_work;
 static const int           myrc_interval = 1000;
+static unsigned int state = 1;
 
 static void input_test_idle(struct rc_dev *dev, bool enable)
 {
@@ -14,10 +15,19 @@ static void input_test_idle(struct rc_dev *dev, bool enable)
 
 static void input_test_poll(struct work_struct *work)
 {
-	printk(KERN_INFO "input_test_poll:\n");
-
 	schedule_delayed_work(&myrc_delayed_work,
 			      msecs_to_jiffies(myrc_interval));
+
+	u32 keycode = rc_g_keycode_from_table(myrc, KEY_MUTE);
+	
+	printk(KERN_INFO "input_test_poll: (scan %d, key %d)\n", 
+	       KEY_MUTE, keycode);
+
+	//rc_keydown(myrc, KEY_MUTE, 1);
+	input_event(myrc->input_dev, EV_MSC, MSC_SCAN, KEY_MUTE);
+	input_report_key(myrc->input_dev, KEY_MUTE, state);
+	state = 1-state;
+	input_sync(myrc->input_dev);
 }
 
 static int __init input_test_init(void)
@@ -34,7 +44,7 @@ static int __init input_test_init(void)
 
 	myrc->driver_name = "d-input-test-driver";
 	myrc->input_name = "d-input-test-input";
-	myrc->map_name = RC_MAP_EMPTY;
+	myrc->map_name = RC_MAP_LIRC;
 	myrc->priv = (void *)0x1234;
 
 	myrc->s_idle = input_test_idle;

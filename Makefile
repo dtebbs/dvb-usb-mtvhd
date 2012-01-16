@@ -26,6 +26,7 @@ realsrctree = /usr/src/linux-$(shell uname -r)
 EXTRA_CFLAGS += \
     -include $(obj)/mtvhd-compat.h \
     -include $(obj)/mtvhd-usb-ids.h \
+    -I $(srctree)/include/media \
     -I $(srctree)/drivers/media/dvb/dvb-core \
     -I $(srctree)/drivers/media/dvb/frontends \
     -I $(srctree)/drivers/media/dvb/dvb-usb \

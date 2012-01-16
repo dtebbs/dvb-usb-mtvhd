@@ -2,12 +2,22 @@
 #include <rc-core.h>
 
 static struct rc_dev *myrc = 0;
+static struct delayed_work myrc_delayed_work;
+static const int           myrc_interval = 1000;
 
 static void input_test_idle(struct rc_dev *dev, bool enable)
 {
 
 	printk(KERN_INFO "input_test_idle: (dev %p, enable %s)\n",
 	       dev, (enable)?("true"):("false"));
+}
+
+static void input_test_poll(struct work_struct *work)
+{
+	printk(KERN_INFO "input_test_poll:\n");
+
+	schedule_delayed_work(&myrc_delayed_work,
+			      msecs_to_jiffies(myrc_interval));
 }
 
 static int __init input_test_init(void)
@@ -29,7 +39,6 @@ static int __init input_test_init(void)
 
 	myrc->s_idle = input_test_idle;
 
-
 	err = rc_register_device(myrc);
 	if (err) {
 		printk(KERN_INFO " reg failed\n");
@@ -37,8 +46,12 @@ static int __init input_test_init(void)
 		myrc = 0;
 		return err;
 	}
-
 	printk(KERN_INFO "registered\n");
+
+	INIT_DELAYED_WORK(&myrc_delayed_work, input_test_poll);
+	schedule_delayed_work(&myrc_delayed_work,
+			      msecs_to_jiffies(myrc_interval));
+
         return 0;
 }
 
@@ -47,6 +60,8 @@ static void __exit input_test_exit(void)
         printk(KERN_INFO "input_test_exit:\n");
 
 	if (myrc) {
+		cancel_delayed_work(&myrc_delayed_work);
+
 		printk(KERN_INFO "unregistering\n");
 		rc_unregister_device(myrc);
 		myrc = 0;

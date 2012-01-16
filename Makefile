@@ -5,7 +5,11 @@
 
 obj-m += \
     dvb-usb-mtvhd.o \
-    dvb-usb-asv5211.o
+    dvb-usb-asv5211.o \
+    d-input-test.o
+
+d-input-test-objs := \
+    input-test.o
 
 dvb-usb-mtvhd-objs := \
     mtvhd.o mtvhd-v1.o mtvhd-xor.o \
@@ -37,3 +41,11 @@ all:
 
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+
+
+input-test :
+	-sudo rmmod d-input-test
+	sudo insmod d-input-test.ko
+	echo waiting ...
+	sleep 3
+	sudo rmmod d-input-test.ko

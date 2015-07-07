@@ -136,8 +136,8 @@ int mtvhd_stream_init(struct dvb_usb_adapter *adap)
 	struct mtvhd_adapter_state *st = adap->priv;
 
 	st->decrypt = mtvhd_dummy_decrypt;
-	st->complete_orig = adap->stream.complete;
-	adap->stream.complete = mtvhd_stream_complete;
+	st->complete_orig = adap->fe_adap[0].stream.complete;
+	adap->fe_adap[0].stream.complete = mtvhd_stream_complete;
 
 	return 0;
 }

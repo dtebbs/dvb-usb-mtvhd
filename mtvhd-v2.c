@@ -373,7 +373,7 @@ static int mtvhd_tuner_init(struct dvb_frontend *fe)
 		ret = mtvhd_tuner_reg_write(fe, 0x10, 0x40);
 	}
 	else {
-		struct dvb_frontend *fe0 = st->adap->dev->adapter[0].fe;
+		struct dvb_frontend *fe0 = st->adap->dev->adapter[0].fe_adap[0].fe;
 		struct mtvhd_fe_state *st0 = fe0->demodulator_priv;
 
 		if (!(st0->status & MTVHD_FE_STATUS_ON)) {
@@ -917,8 +917,8 @@ static struct dvb_frontend *mtvhd_v2_fe_attach(struct dvb_usb_adapter *adap)
 
 int mtvhd_v2_frontend_attach(struct dvb_usb_adapter *adap)
 {
-	adap->fe = mtvhd_v2_fe_attach(adap);
-	if (adap->fe == NULL) {
+	adap->fe_adap[0].fe = mtvhd_v2_fe_attach(adap);
+	if (adap->fe_adap[0].fe == NULL) {
 		return -ENOMEM;
 	}
 

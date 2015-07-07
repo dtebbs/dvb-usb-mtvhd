@@ -658,8 +658,8 @@ static struct dvb_frontend *mtvhd_v1_fe_attach(struct dvb_usb_adapter *adap)
 
 int mtvhd_v1_frontend_attach(struct dvb_usb_adapter *adap)
 {
-	adap->fe = mtvhd_v1_fe_attach(adap);
-	if (adap->fe == NULL) {
+	adap->fe_adap[0].fe = mtvhd_v1_fe_attach(adap);
+	if (adap->fe_adap[0].fe == NULL) {
 		return -ENOMEM;
 	}
 

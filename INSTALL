@@ -1,3 +1,12 @@
+- Prerequisites
+
+  > sudo apt-get install linux-source
+  > tar -xjf /usr/src/linux-source-xxxx.tar.bz2
+
+  Inside this directory
+
+  > ln -s ..path/to/linux-source-xxxx linux-source
+
 - Build module:
 
   make
@@ -9,6 +18,6 @@
 
 - Load modules:
 
+  sudo modprobe dvb-core
+  sudo modprobe dvb-usb
   sudo insmod dvb-usb-asv5211.ko
-
-

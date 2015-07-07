@@ -6,7 +6,7 @@
 obj-m += \
     dvb-usb-mtvhd.o \
     dvb-usb-asv5211.o \
-    d-input-test.o
+    # d-input-test.o
 
 d-input-test-objs := \
     input-test.o
@@ -21,18 +21,21 @@ dvb-usb-asv5211-objs := \
 
 # mtvhd-des-kernel.o
 
-realsrctree = /usr/src/linux-$(shell uname -r)
+# realsrctree = /usr/src/linux-source-$(shell uname -r)
+realsrctree = $(obj)/linux-source
 
 EXTRA_CFLAGS += \
     -include $(obj)/mtvhd-compat.h \
     -include $(obj)/mtvhd-usb-ids.h \
-    -I $(srctree)/include/media \
-    -I $(srctree)/drivers/media/dvb/dvb-core \
-    -I $(srctree)/drivers/media/dvb/frontends \
-    -I $(srctree)/drivers/media/dvb/dvb-usb \
     -I $(realsrctree)/drivers/media/dvb/dvb-core \
     -I $(realsrctree)/drivers/media/dvb/frontends \
     -I $(realsrctree)/drivers/media/dvb/dvb-usb
+
+    # -I $(srctree)/include/media \
+    # -I $(srctree)/drivers/media/dvb/dvb-core \
+    # -I $(srctree)/drivers/media/dvb/frontends \
+    # -I $(srctree)/drivers/media/dvb/dvb-usb \
+
 
 
 dot-config := 1

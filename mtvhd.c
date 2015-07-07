@@ -676,26 +676,30 @@ static struct dvb_usb_device_properties hdu2_properties = {
 		{
 #if 0
 			.caps = DVB_USB_ADAP_HAS_PID_FILTER |
-				DVB_USB_ADAP_PID_FILTER_CAN_BE_TURNED_OFF,
+            DVB_USB_ADAP_PID_FILTER_CAN_BE_TURNED_OFF,
 
 			.pid_filter_count = 8,
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v2_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x81,
-				.u = {
-					.bulk = {
-						.buffersize = 0x10000,
-					}
-				}
-			},
-			.size_of_priv = sizeof(struct mtvhd_adapter_state),
-		},
+            .num_frontends = 1,
+            .fe = {{
+                    .caps = 0,
+                    .frontend_attach  = mtvhd_v2_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x81,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    }
+                }},
+            .size_of_priv = sizeof(struct mtvhd_adapter_state),
+        },
 		{
 #if 0
 			.caps = DVB_USB_ADAP_HAS_PID_FILTER |
@@ -705,18 +709,21 @@ static struct dvb_usb_device_properties hdu2_properties = {
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v2_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x82,
-				.u = {
-					.bulk = {
-						.buffersize = 0x10000,
-					}
-				}
-			},
+            .num_frontends = 1,
+            .fe = {{
+                    .frontend_attach  = mtvhd_v2_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x82,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    },
+                }},
 			.size_of_priv = sizeof(struct mtvhd_adapter_state),
 		}
 	},
@@ -770,18 +777,22 @@ static struct dvb_usb_device_properties hdp2_properties = {
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v2_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x81,
-				.u = {
-					.bulk = {
-						.buffersize = 0x10000,
-					}
-				}
-			},
+
+            .num_frontends = 1,
+            .fe = {{
+                    .frontend_attach  = mtvhd_v2_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x81,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    },
+                }},
 			.size_of_priv = sizeof(struct mtvhd_adapter_state),
 		},
 		{
@@ -793,18 +804,22 @@ static struct dvb_usb_device_properties hdp2_properties = {
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v2_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x82,
-				.u = {
-					.bulk = {
-						.buffersize = 0x10000,
-					}
-				}
-			},
+            .num_frontends = 1,
+            .fe = {{
+
+                    .frontend_attach  = mtvhd_v2_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x82,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    },
+                }},
 			.size_of_priv = sizeof(struct mtvhd_adapter_state),
 		}
 	},
@@ -845,18 +860,21 @@ static struct dvb_usb_device_properties hduc_properties = {
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v2_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x81,
-				.u = {
-					.bulk = {
-						.buffersize = 0x10000,
-					}
-				}
-			},
+            .num_frontends = 1,
+            .fe = {{
+                    .frontend_attach  = mtvhd_v2_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x81,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    },
+                }},
 			.size_of_priv = sizeof(struct mtvhd_adapter_state),
 		},
 	},
@@ -914,18 +932,21 @@ static struct dvb_usb_device_properties hdpg_properties = {
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v2_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x81,
-				.u = {
-					.bulk = {
-						.buffersize = 0x10000,
-					}
-				}
-			},
+            .num_frontends = 1,
+            .fe = {{
+                    .frontend_attach  = mtvhd_v2_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x81,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    },
+                }},
 			.size_of_priv = sizeof(struct mtvhd_adapter_state),
 		},
 	},
@@ -960,18 +981,21 @@ static struct dvb_usb_device_properties hdus_properties = {
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v1_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x81,
-				.u = {
-					 .bulk = {
-						 .buffersize = 0x10000,
-					 }
-				}
-			},
+            .num_frontends = 1,
+            .fe = {{
+                    .frontend_attach  = mtvhd_v1_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x81,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    },
+                }},
 			.size_of_priv = sizeof(struct mtvhd_adapter_state),
 		},
 	},
@@ -1021,18 +1045,21 @@ static struct dvb_usb_device_properties hdp_properties = {
 			.pid_filter       = mtvhd_pid_filter,
 			.pid_filter_ctrl  = mtvhd_pid_filter_ctrl,
 #endif
-			.frontend_attach  = mtvhd_v1_frontend_attach,
-			.streaming_ctrl   = mtvhd_stream_ctrl,
-			.stream = {
-				.type = USB_BULK,
-				.count = 8,
-				.endpoint = 0x81,
-				.u = {
-					 .bulk = {
-						 .buffersize = 0x10000,
-					 }
-				}
-			},
+            .num_frontends = 1,
+            .fe = {{
+                    .frontend_attach  = mtvhd_v1_frontend_attach,
+                    .streaming_ctrl   = mtvhd_stream_ctrl,
+                    .stream = {
+                        .type = USB_BULK,
+                        .count = 8,
+                        .endpoint = 0x81,
+                        .u = {
+                            .bulk = {
+                                .buffersize = 0x10000,
+                            }
+                        }
+                    },
+                }},
 			.size_of_priv = sizeof(struct mtvhd_adapter_state),
 		},
 	},

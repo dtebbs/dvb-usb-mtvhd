@@ -20,6 +20,8 @@
 #define _DVB_USB_MTVHD_H_
 
 #define DVB_USB_LOG_PREFIX "mtvhd"
+
+#include "dvb/frontend.h"
 #include "dvb-usb.h"
 #include "dvb_filter.h"
 

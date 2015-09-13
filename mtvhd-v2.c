@@ -713,39 +713,43 @@ static int mtvhd_fe_get_tune_settings(struct dvb_frontend *fe,
 	return 0;
 }
 
-static int mtvhd_fe_set_frontend(struct dvb_frontend* fe,
-				struct dvb_frontend_parameters *fep)
+static int mtvhd_fe_set_frontend(struct dvb_frontend* fe
+                                 /* , struct dvb_frontend_parameters *fep */
+                                 )
 {
+	struct dtv_frontend_properties *p = &fe->dtv_property_cache;
 	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int ret;
 
-	deb_info("FE[%d] set frontend\n", st->adap->id);
+	deb_info("FE[%d] set freq: %d\n", st->adap->id, p->frequency);
 
 	/* for recovery from DTV_CLEAR */
 	fe->dtv_property_cache.delivery_system = SYS_ISDBT;
 
 	/* NOTE: this driver ignores all parameters but frequency. */
-	ret = mtvhd_freq_set(fe, fep->frequency);
-	if (ret != 0) {
+	ret = mtvhd_freq_set(fe, p->frequency);
+	if (ret) {
 		err("Tuner frequency setting failed: %d", ret);
 		return ret;
 	}
 
 	/* Initialize PID filter */
 	ret = mtvhd_pid_filter_init(st->adap);
-	if (ret != 0) {
+	if (ret) {
 		err("PID filter setting failed: %d", ret);
 	}
 
 	return ret;
 }
 
-static int mtvhd_fe_get_frontend(struct dvb_frontend* fe,
-				struct dvb_frontend_parameters *fep)
+static int mtvhd_fe_get_frontend(struct dvb_frontend* fe
+                                 /* , struct dvb_frontend_parameters *fep */
+                                 )
 {
+	struct dtv_frontend_properties *p = &fe->dtv_property_cache;
 	deb_info("FE[%d] get frontend\n", fe->demodulator_priv->adap->id);
-
-	fep->u.ofdm.bandwidth = BANDWIDTH_6_MHZ;
+	p->bandwidth_hz = 6000000;
+	/* fep->u.ofdm.bandwidth = BANDWIDTH_6_MHZ; */
 	return 0;
 }
 

@@ -21,3 +21,16 @@
   sudo modprobe dvb-core
   sudo modprobe dvb-usb
   sudo insmod dvb-usb-asv5211.ko
+
+- udev rules:
+
+  /etc/udev/rules.d/10-local.rules:
+
+    # MonsterTV
+    SUBSYSTEM=="usb", ACTION=="add", \
+      ATTRS{idVendor}=="1738", ATTRS{idProduct}=="5211", \
+      RUN+="/opt/video/mtvhd-on-insert.sh"
+
+    SUBSYSTEM=="usb", ACTION=="add", \
+      ATTRS{idVendor}=="3275", ATTRS{idProduct}=="6051", \
+      MODE="0664", GROUP="www-data"

@@ -27,9 +27,10 @@ realsrctree = $(obj)/linux-source
 EXTRA_CFLAGS += \
     -include $(obj)/mtvhd-compat.h \
     -include $(obj)/mtvhd-usb-ids.h \
-    -I $(realsrctree)/drivers/media/dvb/dvb-core \
-    -I $(realsrctree)/drivers/media/dvb/frontends \
-    -I $(realsrctree)/drivers/media/dvb/dvb-usb
+    -I $(realsrctree)/include/uapi/linux \
+    -I $(realsrctree)/drivers/media/dvb-core \
+    -I $(realsrctree)/drivers/media/dvb-frontends \
+    -I $(realsrctree)/drivers/media/usb/dvb-usb
 
     # -I $(srctree)/include/media \
     # -I $(srctree)/drivers/media/dvb/dvb-core \

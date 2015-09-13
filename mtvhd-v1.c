@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include "mtvhd.h"
+
 #include "dvb_math.h"
 
 /*
@@ -470,9 +472,11 @@ static int mtvhd_fe_get_tune_settings(struct dvb_frontend *fe,
 	return 0;
 }
 
-static int mtvhd_fe_set_frontend(struct dvb_frontend* fe,
-				struct dvb_frontend_parameters *fep)
+static int mtvhd_fe_set_frontend(struct dvb_frontend* fe
+				 // ,				 //struct dvb_frontend_parameters *fep
+				 )
 {
+	struct dtv_frontend_properties *p = &fe->dtv_property_cache;
 	struct mtvhd_fe_state *st = fe->demodulator_priv;
 	int ret;
 
@@ -482,7 +486,7 @@ static int mtvhd_fe_set_frontend(struct dvb_frontend* fe,
 	fe->dtv_property_cache.delivery_system = SYS_ISDBT;
 
 	/* NOTE: this driver ignores all parameters but frequency. */
-	ret = mtvhd_freq_set(fe, fep->frequency);
+	ret = mtvhd_freq_set(fe, p->frequency);
 	if (ret != 0) {
 		err("Tuner frequency setting failed: %d", ret);
 		return ret;
@@ -497,14 +501,18 @@ static int mtvhd_fe_set_frontend(struct dvb_frontend* fe,
 	return ret;
 }
 
-static int mtvhd_fe_get_frontend(struct dvb_frontend* fe,
-				struct dvb_frontend_parameters *fep)
+static int mtvhd_fe_get_frontend(struct dvb_frontend* fe
+				 /* , struct dvb_frontend_parameters *fep */
+				 )
 {
-//	struct mtvhd_fe_state *st = fe->demodulator_priv;
+	struct dtv_frontend_properties *p = &fe->dtv_property_cache;
+	/* struct mtvhd_fe_state *st = fe->demodulator_priv; */
 
 	deb_info("FE get frontend\n");
 
-	fep->u.ofdm.bandwidth = BANDWIDTH_6_MHZ;
+	/* fep->u.ofdm.bandwidth = BANDWIDTH_6_MHZ; */
+	p->bandwidth_hz = 6000000;
+
 	return 0;
 }
 
